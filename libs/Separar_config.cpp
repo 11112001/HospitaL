@@ -1,8 +1,8 @@
 //Código nuevo
 //#include <fstream>
+//#include <iostream>
 #include <cstddef>
 #include <cstring>
-#include <iostream>
 #include <sstream>
 #include <cstring>
 #include <string>
@@ -22,7 +22,7 @@ char* StringAChar(const string& str)
 }
 
 //una sola linea
-char* separarConfiguracion(string linea) 
+char** separarConfiguracion(string linea) 
 {
     //Creación de matríz
     char** temp = new char *[3];
@@ -36,21 +36,13 @@ char* separarConfiguracion(string linea)
     getline(ss, minStr, ',');
     getline(ss, maxStr, ',');
 
-    
-    /*
-    strcpy(temp[0], StringAChar(tipo));
-    strcpy(temp[1], StringAChar(minStr));
-    strcpy(temp[2], StringAChar(maxStr));
-    */
-
     temp[0] = StringAChar(tipo);
     temp[1] = StringAChar(minStr);
     temp[2] = StringAChar(maxStr);
 
-    //cout <<"Temporales: " << temp[1] << " || " << temp[2] <<"\n";
-
     
-    return *temp;
+    
+    return temp;
 }
 
 void configAStruct(char** datos, Configuracion& config )
