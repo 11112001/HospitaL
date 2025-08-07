@@ -10,18 +10,6 @@
 
 using namespace std;
 
-/*
-void separarPaciente(const string& linea, Paciente& paciente) 
-{
-    stringstream ss(linea);
-    char delimiter = ';';
-    ss >> paciente.id >> paciente.tipoDeDocumento >> paciente.documento
-    >> paciente.nombres >> paciente.apellidos >> paciente.fechaNacimiento
-    >> paciente.telefono >> paciente.email >> paciente.tipoDeSangre
-    >> paciente.entidadSalud >> paciente.medicinaPrepagada;
-}
-*/
-
 void cadAStruct(char** datos, Paciente& paciente)
 {
     paciente.id = atoi(datos[0]);
@@ -50,7 +38,7 @@ char* cadenaAChar(const string& str)
 }
 
 //una sola linea
-char* separarPaciente(const string& linea, Paciente& paciente)
+char** separarPaciente(const string& linea)
 {
     char ** temp = new char*[11];
     stringstream ss(linea);
@@ -59,10 +47,11 @@ char* separarPaciente(const string& linea, Paciente& paciente)
     for(int i = 0; i <11; i++)
     {
         getline(ss, token, ';');
-        strcpy(temp[i], cadenaAChar(token));
+        //strcpy(temp[i], cadenaAChar(token));
+        temp[i] = cadenaAChar(token);
     }
 
-    return *temp;
+    return temp;
 }
 
 /*
