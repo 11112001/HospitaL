@@ -1,24 +1,34 @@
-//#include <cstddef>
+//librerias:
 #include <iostream>
+#include <unistd.h>
+#include <limits.h>
 
 //Por qué da warning!
-//#include "libs/Config.h"
-//#include "libs/Paciente.h"
+#include "libs/Config.h"
+#include "libs/Paciente.h"
 #include "libs/Separar_Pacientes.cpp"
 #include "libs/Separar_config.cpp"
 
 using namespace std;
 
+string obtenerDirectorioActual() {
+    char cwd[PATH_MAX];
+    if (getcwd(cwd, sizeof(cwd)) != nullptr) {
+        return string(cwd);
+    }
+    return "";
+}
+
 void cargarConfiguracion() 
 {
     cout << "Cargando archivo de configuracion..." << endl;
-    // Implementar carga de archivo de configuracion
 }
 
 void cargarDatosPacientes() 
 {
-    cout << "Cargando datos de pacientes..." << endl;
-    // Implementar carga de archivo de pacientes
+    cout << "Cargando datos de pacientes... " << endl;
+    cargarPacientes(obtenerDirectorioActual()  + "/data/pacientes_small.csv");
+    
 }
 
 void leerArchivoBSF() 
@@ -48,8 +58,11 @@ void exportarDatosProcesados()
 int main() 
 {
     int opcion;
-    char* Prueba = nullptr;
-    string TiposDatos= "T,36.0,38.0";
+    char** Prueba = nullptr;
+    string TiposDatos= "2; PA; HA387946; Alberto; Torres; 27/11/1960; 3080915628; atorres@example.com; O+; Coomeva; Medisanitas";
+    char delimitador = ';';
+    Configuracion ConfigCon;
+    Paciente pacienteCon;
     do 
     {
         cout << "Menú Principal:" << endl;
@@ -65,7 +78,7 @@ int main()
         switch (opcion) 
         {
             case 1:
-                cargarConfiguracion();
+                //cargarConfiguracion();
                 cargarDatosPacientes();
                 break;
             case 2:
@@ -85,10 +98,8 @@ int main()
                 break;
             case 7:
                 cout << "voy acá \n";
-                Prueba = separarConfiguracion(TiposDatos);
-                cout << "Respuesta: " << Prueba[0] <<"\n";
-                cout << "Respuesta: " << Prueba[1] <<"\n";
-                cout << "Respuesta: " << Prueba[2] <<"\n";
+
+                pacAStruct(Prueba, pacienteCon);
                 break;
             default:
                 cout << "Opción inválida. Intente de nuevo." << endl;
