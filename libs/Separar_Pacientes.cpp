@@ -1,21 +1,22 @@
 //Nuevo Código.
-//#include <iostream>
-//#include <fstream>
+#include <cstdlib>
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <cstring>
+#include <fstream>
 
 #include "Paciente.h"
 
 
 using namespace std;
 
-void cadAStruct(char** datos, Paciente& paciente)
+void pacAStruct(char** datos, Paciente& paciente)
 {
     paciente.id = atoi(datos[0]);
     
     strcpy(paciente.tipoDeDocumento, datos[1]);
-    strcpy(paciente.nombres, datos[2]);
+    strcpy(paciente.documento, datos[2]);
     strcpy(paciente.nombres, datos[3]);
     strcpy(paciente.apellidos, datos[4]);
     strcpy(paciente.fechaNacimiento, datos[5]);
@@ -24,6 +25,10 @@ void cadAStruct(char** datos, Paciente& paciente)
     strcpy(paciente.tipoDeSangre, datos[8]);
     strcpy(paciente.entidadSalud, datos[9]);
     strcpy(paciente.medicinaPrepagada, datos[10]);
+
+    //Imprimir
+    //cout << "documento: " << paciente.id << "\n";
+    //cout << "medicina prepaga: " << paciente.medicinaPrepagada << "\n";
 } 
 
 
@@ -38,15 +43,15 @@ char* cadenaAChar(const string& str)
 }
 
 //una sola linea
-char** separarPaciente(const string& linea)
+char** separar(const string& linea, int cantidad, char delimitador)
 {
-    char ** temp = new char*[11];
+    char ** temp = new char*[cantidad];
     stringstream ss(linea);
     string token;
 
-    for(int i = 0; i <11; i++)
+    for(int i = 0; i <cantidad; i++)
     {
-        getline(ss, token, ';');
+        getline(ss, token, delimitador);
         //strcpy(temp[i], cadenaAChar(token));
         temp[i] = cadenaAChar(token);
     }
@@ -54,18 +59,40 @@ char** separarPaciente(const string& linea)
     return temp;
 }
 
-/*
-void cargarPacientes(const string& archivo) 
+void imprimirEstruct(Paciente*& paciente)
 {
-    ifstream file(archivo);
-    string linea;
-    while (getline(file, linea)) {
-        Paciente paciente;
-        separarPaciente(linea, paciente);
-        // Almacenar los datos del paciente o procesarlos
+    for (int i = 0; i < 3; i ++)
+    {
+        cout <<"id: " << paciente[i].id << "\n";
+        cout <<"Medicina prepagada: " << paciente[i].medicinaPrepagada << "\n";
     }
 }
-*/
+
+void cargarPacientes(const string& archivo) 
+{
+    ifstream archi(archivo);
+
+    /*
+    if(!archi)
+    {
+        cout <<"Archivo no encontrado";
+        exit(0);
+    }
+    */
+    
+    string linea;
+    Paciente *paciente = new Paciente[2];
+    int cont = 0;
+    while (getline(archi, linea)) {
+        
+        pacAStruct(separar(linea, 11, ';'), paciente[cont]);
+        // Almacenar los datos del paciente o procesarlos
+        cont ++;
+    }
+    //imprimirEstruct(paciente);
+}
+
+
 
 struct Fecha {
     int dia;
