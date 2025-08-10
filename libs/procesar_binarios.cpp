@@ -125,3 +125,4 @@ SalaUCI leerEstructuraBinaria(string Ruta)
     //cout << "otro dato: " << sala.maquinas[0].mediciones[0].numLecturas <<"\n";
     return sala;
 }
+//
