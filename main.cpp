@@ -5,11 +5,18 @@
 
 //Por qué da warning!
 #include "libs/Config.h"
+//#include "libs/MaquinaUCI.h"
 #include "libs/Paciente.h"
+#include "libs/SalaUCI.h"
 #include "libs/Separar_Pacientes.cpp"
 #include "libs/Separar_config.cpp"
-
+#include "libs/procesar_binarios.cpp"
+#include "libs/DeteccionAnomilia.cpp"
 using namespace std;
+Configuracion *ConfigCon;
+
+SalaUCI sala;
+
 
 string obtenerDirectorioActual() {
     char cwd[PATH_MAX];
@@ -19,9 +26,17 @@ string obtenerDirectorioActual() {
     return "";
 }
 
-void cargarConfiguracion() 
+void cargarConfig() 
 {
     cout << "Cargando archivo de configuracion..." << endl;
+    *ConfigCon = cargarConfiguracion(obtenerDirectorioActual() + "/data/configuracion.txt");
+    /*
+    for (int i = 0; i < 5; i ++)
+    {
+        cout <<"Tipo Sensor: " << ConfigCon[i].tipoSensor << "\n";
+        cout <<"Minimo " << ConfigCon[i].min << "\n";
+    }
+    */
 }
 
 void cargarDatosPacientes() 
@@ -34,13 +49,14 @@ void cargarDatosPacientes()
 void leerArchivoBSF() 
 {
     cout << "Leyendo archivo .bsf..." << endl;
-    // Implementar lectura de archivo .bsf
+    sala = leerEstructuraBinaria(obtenerDirectorioActual() + "/patient_readings_simulation_tiny.bsf");
+    //cout << "Dato: " << static_cast<int>(sala.maquinas[0].idMaquina) << "\n";
 }
 
 void generarReporteAnomalias() 
 {
     cout << "Generando reporte de anomalías..." << endl;
-    // Implementar reporte de anomalías
+    deteccionAnomala("1", sala, ConfigCon);
 }
 
 void calcularEstadisticas() 
@@ -61,7 +77,6 @@ int main()
     char** Prueba = nullptr;
     string TiposDatos= "2; PA; HA387946; Alberto; Torres; 27/11/1960; 3080915628; atorres@example.com; O+; Coomeva; Medisanitas";
     char delimitador = ';';
-    Configuracion ConfigCon;
     Paciente pacienteCon;
     do 
     {
@@ -78,7 +93,7 @@ int main()
         switch (opcion) 
         {
             case 1:
-                //cargarConfiguracion();
+                cargarConfig();
                 cargarDatosPacientes();
                 break;
             case 2:
