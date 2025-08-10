@@ -5,11 +5,11 @@
 #include <iostream>
 
 using namespace std;
-void configAStruct(char** data, Configuracion& config )
+void configAStruct(char** data, Configuracion*& config, int cont )
 {
-    config.tipoSensor = *data[0];
-    config.min = stod(data[1]);
-    config.max = stod(data[2]);
+    config[cont].tipoSensor = *data[0];
+    config[cont].min = stod(data[1]);
+    config[cont].max = stod(data[2]);
 }
 
 void imprimirEstruct(Configuracion*& config)
@@ -21,7 +21,7 @@ void imprimirEstruct(Configuracion*& config)
     }
 }
 
-Configuracion cargarConfiguracion(const string& archivo) 
+void cargarConfiguracion(const string& archivo, Configuracion*& Config) 
 {
     ifstream file(archivo);
     
@@ -37,14 +37,13 @@ Configuracion cargarConfiguracion(const string& archivo)
     
     while (getline(file, linea)) 
     {
-        configAStruct(separar(linea, 3, ','), configu[contador]);
+        configAStruct(separar(linea, 3, ','), configu, contador);
         // Almacenar la configuración en una estructura o hacer algo con ella
         contador ++;
     }
-
+    Config = configu;
     imprimirEstruct(configu);
 
-    return *configu;
 }
 
 
