@@ -6,6 +6,7 @@
 #include <cstring>
 #include <fstream>
 
+#include "Config.h"
 #include "Paciente.h"
 
 
@@ -25,10 +26,6 @@ void pacAStruct(char** datos, Paciente& paciente)
     strcpy(paciente.tipoDeSangre, datos[8]);
     strcpy(paciente.entidadSalud, datos[9]);
     strcpy(paciente.medicinaPrepagada, datos[10]);
-
-    //Imprimir
-    //cout << "documento: " << paciente.id << "\n";
-    //cout << "medicina prepaga: " << paciente.medicinaPrepagada << "\n";
 } 
 
 
@@ -72,13 +69,13 @@ void cargarPacientes(const string& archivo)
 {
     ifstream archi(archivo);
 
-    /*
+    
     if(!archi)
     {
         cout <<"Archivo no encontrado";
         exit(0);
     }
-    */
+    
     
     string linea;
     Paciente *paciente = new Paciente[2];
@@ -89,7 +86,6 @@ void cargarPacientes(const string& archivo)
         // Almacenar los datos del paciente o procesarlos
         cont ++;
     }
-    //imprimirEstruct(paciente);
 }
 
 
@@ -149,4 +145,19 @@ bool compararFechas(string fecha1, string fecha2)
     }else{
         return true; // atp. som iguales, pero se toma cualquiera los dos como mayor.
     }
+}
+
+void detectorAnomlia(Paciente paciente, Configuracion*& config, string tipoSensorCorrecto)
+{
+    for(int i = 0; i < 5; i ++)
+    {
+        /*
+        if(config[i].tipoSensor == cadenaAChar(tipoSensorCorrecto))
+        {
+            break;
+        }
+        */
+    }
+    
+
 }
