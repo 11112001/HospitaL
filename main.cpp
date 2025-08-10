@@ -8,12 +8,16 @@
 //#include "libs/MaquinaUCI.h"
 #include "libs/Paciente.h"
 #include "libs/SalaUCI.h"
+#include "libs/Reporte.h"
 #include "libs/Separar_Pacientes.cpp"
 #include "libs/Separar_config.cpp"
 #include "libs/procesar_binarios.cpp"
 #include "libs/DeteccionAnomilia.cpp"
+#include "libs/creacionRerpote.cpp"
+
 using namespace std;
-Configuracion *ConfigCon;
+Configuracion *configCon;
+ReporteText *reporteText = new ReporteText[1000];
 
 SalaUCI sala;
 
@@ -29,14 +33,8 @@ string obtenerDirectorioActual() {
 void cargarConfig() 
 {
     cout << "Cargando archivo de configuracion..." << endl;
-    *ConfigCon = cargarConfiguracion(obtenerDirectorioActual() + "/data/configuracion.txt");
-    /*
-    for (int i = 0; i < 5; i ++)
-    {
-        cout <<"Tipo Sensor: " << ConfigCon[i].tipoSensor << "\n";
-        cout <<"Minimo " << ConfigCon[i].min << "\n";
-    }
-    */
+    cargarConfiguracion(obtenerDirectorioActual() + "/data/configuracion.txt", configCon);
+   
 }
 
 void cargarDatosPacientes() 
@@ -56,13 +54,13 @@ void leerArchivoBSF()
 void generarReporteAnomalias() 
 {
     cout << "Generando reporte de anomalías..." << endl;
-    deteccionAnomala("1", sala, ConfigCon);
+    deteccionAnomala("1", sala, configCon);
 }
 
 void calcularEstadisticas() 
 {
     cout << "Calculando estadísticas..." << endl;
-    // Implementar cálculo de estadísticas
+    calcular(sala,reporteText, "1", configCon);
 }
 
 void exportarDatosProcesados() 
