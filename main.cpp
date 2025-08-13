@@ -5,7 +5,6 @@
 
 //Por qué da warning!
 #include "libs/Config.h"
-//#include "libs/MaquinaUCI.h"
 #include "libs/Paciente.h"
 #include "libs/SalaUCI.h"
 #include "libs/Reporte.h"
@@ -40,14 +39,14 @@ void cargarConfig()
 void cargarDatosPacientes() 
 {
     cout << "Cargando datos de pacientes... " << endl;
-    cargarPacientes(obtenerDirectorioActual()  + "/data/pacientes_small.csv");
+    cargarPacientes(obtenerDirectorioActual()  + "/data/pacientes.csv");
     
 }
 
 void leerArchivoBSF() 
 {
     cout << "Leyendo archivo .bsf..." << endl;
-    sala = leerEstructuraBinaria(obtenerDirectorioActual() + "/patient_readings_simulation_tiny.bsf");
+    sala = leerEstructuraBinaria(obtenerDirectorioActual() + "/patient_readings_simulation_small.bsf");
     //cout << "Dato: " << static_cast<int>(sala.maquinas[0].idMaquina) << "\n";
 }
 
