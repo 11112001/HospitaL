@@ -14,11 +14,16 @@ void configAStruct(char** data, Configuracion*& config, int cont )
 
 void imprimirEstruct(Configuracion*& config)
 {
+    cout << "--------CONFIGURACIÓN----------\n";
+    cout << "TS | Mín| Máx\n";
+    cout << "-------------------------------\n";
     for (int i = 0; i < 5; i ++)
     {
-        cout <<"Tipo Sensor: " << config[i].tipoSensor << "\n";
-        cout <<"Minimo " << config[i].min << "\n";
+        
+        cout << config[i].tipoSensor << " "  << config[i].min <<" " << config[i].max << "\n";
     }
+    cout << "-------------------------------\n";
+
 }
 
 void cargarConfiguracion(const string& archivo, Configuracion*& Config) 
@@ -45,6 +50,3 @@ void cargarConfiguracion(const string& archivo, Configuracion*& Config)
     imprimirEstruct(configu);
 
 }
-
-
-
