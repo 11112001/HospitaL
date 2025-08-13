@@ -12,6 +12,8 @@
 
 using namespace std;
 
+//función para pasar los datos de un paciente a la estructura de paciente
+
 void pacAStruct(char** datos, Paciente& paciente)
 {
     paciente.id = atoi(datos[0]);
@@ -28,6 +30,7 @@ void pacAStruct(char** datos, Paciente& paciente)
     strcpy(paciente.medicinaPrepagada, datos[10]);
 } 
 
+//Función para pasar cadenas a chars
 
 char* cadenaAChar(const string& str) 
 {
@@ -56,13 +59,18 @@ char** separar(const string& linea, int cantidad, char delimitador)
     return temp;
 }
 
+//Función para imprimir una estructura
+
 void imprimirEstruct(Paciente*& paciente)
 {
-    for (int i = 0; i < 3; i ++)
+    cout << "--------PACIENTES:----------\n";
+    cout << "ID | TDoc| Doc | Nombre | Ape | Nac | Tele | Email | Sangre | EPS | MedPre\n";
+    cout << "-------------------------------\n";
+    for (int i = 0; i < 20; i ++)
     {
-        cout <<"id: " << paciente[i].id << "\n";
-        cout <<"Medicina prepagada: " << paciente[i].medicinaPrepagada << "\n";
-    }
+        cout << paciente[i].id << paciente[i].tipoDeDocumento << paciente[i].nombres << paciente[i].apellidos << paciente[i].fechaNacimiento << paciente[i].telefono << paciente[i].email << paciente[i].tipoDeDocumento << paciente[i].entidadSalud << paciente[i].medicinaPrepagada << "\n";   
+    }    
+    cout << "-------------------------------\n";
 }
 
 void cargarPacientes(const string& archivo) 
@@ -78,7 +86,7 @@ void cargarPacientes(const string& archivo)
     
     
     string linea;
-    Paciente *paciente = new Paciente[2];
+    Paciente *paciente = new Paciente[100];
     int cont = 0;
     while (getline(archi, linea)) {
         
@@ -86,78 +94,6 @@ void cargarPacientes(const string& archivo)
         // Almacenar los datos del paciente o procesarlos
         cont ++;
     }
-}
 
-
-
-struct Fecha {
-    int dia;
-    int mes;
-    int anio;
-    int hora;
-    int minuto;
-    int segundo;
-};
-
-Fecha parsearFecha(const string& fechaStr) {
-    Fecha f;
-    char sep; // para leer los caracteres separadores (/, :, espacio)
-    
-    istringstream ss(fechaStr);
-    ss >> f.dia >> sep >> f.mes >> sep >> f.anio;
-    ss >> sep; // lee el espacio entre fecha y hora
-    ss >> f.hora >> sep >> f.minuto >> sep >> f.segundo;
-    
-    return f;
-}
-
-bool compararFechas(string fecha1, string fecha2) 
-{
-    //string fechaTexto = "04/08/2025 15:30:45";
-    Fecha f1 = parsearFecha(fecha1);
-    Fecha f2 = parsearFecha(fecha2);
-
-    if(f1.anio > f2.anio)
-    {
-        return true;
-    }else if(f1.anio != f2.anio){
-        return false;
-    }else if(f1.mes > f2.mes) {
-        return true;
-    }else if(f1.mes != f2.mes){
-        return false;
-    }else if(f1.dia > f2.dia){
-        return true;
-    }else if(f1.dia != f2.dia){
-        return false;
-    }else if(f1.hora > f2.hora){
-        return true;
-    }else if(f1.hora != f2.hora){
-        return false;
-    }else if(f1.minuto > f2.minuto){
-        return true;
-    }else if (f1.minuto != f2.minuto){
-        return false;
-    }else if(f1.segundo > f2.segundo){
-        return true;
-    }else if(f1.segundo != f2.segundo){
-        return false;
-    }else{
-        return true; // atp. som iguales, pero se toma cualquiera los dos como mayor.
-    }
-}
-
-void detectorAnomlia(Paciente paciente, Configuracion*& config, string tipoSensorCorrecto)
-{
-    for(int i = 0; i < 5; i ++)
-    {
-        /*
-        if(config[i].tipoSensor == cadenaAChar(tipoSensorCorrecto))
-        {
-            break;
-        }
-        */
-    }
-    
-
+    imprimirEstruct(paciente);
 }
